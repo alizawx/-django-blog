@@ -1,0 +1,50 @@
+{% extends 'parents/base.html' %}
+{% load jformat %}
+
+{% block title %}
+    Post Detail
+{% endblock %}
+
+{% block content %}
+
+<h1 class="post-detail">{{ post.title }}</h1>
+
+<p class="author">
+    Author: {{ post.author }}
+</p>
+
+<span class="pub-date">
+    {{ post.publish|jformat:"%Y/%m/%d-%H:%M" }}
+</span>
+
+<div class="des">
+    <p class="des-p">
+        {{ post.description|linebreaks }}
+    </p>
+</div>
+
+<hr>
+
+<div>
+    {% with comments.count as cm_count %}
+        {{ cm_count }} comment{{ cm_count|pluralize }}
+    {% endwith %}
+</div>
+
+<div>
+    {% for cm in comments %}
+        <p>{{ cm.body|linebreaks }}</p>
+        <small>{{ cm.name }}</small>
+        <hr>
+    {% empty %}
+        <p>Comment not exist.</p>
+    {% endfor %}
+</div>
+
+<form method="post" action="{% url 'blog:post_comment' post.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="افزودن کامنت">
+</form>
+
+{% endblock %}
