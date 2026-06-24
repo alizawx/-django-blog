@@ -1,6 +1,4 @@
 {% extends 'parents/base.html' %}
-{% load jformat %}
-
 {% block title %}
     Post Detail
 {% endblock %}
@@ -14,7 +12,7 @@
 </p>
 
 <span class="pub-date">
-    {{ post.publish|jformat:"%Y/%m/%d-%H:%M" }}
+    {{ post.publish }}
 </span>
 
 <div class="des">
