@@ -1,4 +1,5 @@
 {% extends 'parents/base.html' %}
+{% load blog_tags %}
 {% block title %}
     Post Detail
 {% endblock %}
@@ -17,7 +18,7 @@
 
 <div class="des">
     <p class="des-p">
-        {{ post.description|linebreaks }}
+        {{ post.description|markdown }}
     </p>
 </div>
 
