@@ -26,6 +26,7 @@ class Post(models.Model):
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.DRAFT)
     reading_time = models.PositiveIntegerField(default=0 , verbose_name= "زمان مطالعه")
+    view_counts = models.PositiveIntegerField(default=0, verbose_name="تعداد بازدید")
 
     objects = models.Manager()
     published = PublishedManager()
@@ -78,3 +79,4 @@ class Comment(models.Model):
 
     def get_absolute_url(self):
         return reverse('blog:post_detail', args=[self.id])
+

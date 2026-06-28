@@ -9,6 +9,10 @@ from django.http import HttpResponse
 from .forms import *
 import datetime
 from django.views.decorators.http import require_POST
+
+from .models import Post
+
+
 # Create your views here.
 
 
@@ -44,12 +48,14 @@ def post_detail(request, pk):
         post = Post.published.get(id=pk)
     except Post.DoesNotExist:
         raise Http404("No post found")
+    post.view_counts += 1
+    post.save()
     comments = post.comments.filter(active=True)
     form = CommentForm()
     context = {
         'post': post,
         'new_date': datetime.datetime.now(),
-        'comments':comments
+        'comments':comments,
     }
     return render(request, "blog/detail.html", context)
 
