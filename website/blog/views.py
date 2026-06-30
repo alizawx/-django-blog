@@ -1,5 +1,5 @@
+from email.policy import default
 from multiprocessing import context
-
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from django.http import HttpResponse, Http404
@@ -9,10 +9,7 @@ from django.http import HttpResponse
 from .forms import *
 import datetime
 from django.views.decorators.http import require_POST
-
 from .models import Post
-
-
 # Create your views here.
 
 
@@ -21,26 +18,54 @@ def index(request):
     return render(request, "blog/index.html")
 
 
-# def post_list(request):
-#     posts = Post.published.all()
-#     paginator = Paginator(posts,3)
-#     page_number = request.GET.get('page',1)
-#     try:
-#         posts = paginator.page(page_number)
-#     except EmptyPage:
-#         posts = paginator.page(paginator.num_pages)
-#     except PageNotAnInteger:
-#         posts = paginator.page(1)# posts = paginator.page(page_number)
-#     context = {
-#         'posts' : posts
-#     }
-#     return render(request, "blog/list.html", context)
+def post_list(request):
+    posts = Post.published.all()
+    form = SearchForm(request.GET or None)
+    error = None
 
-class PostListView(ListView):
-    context_object_name = "posts"
-    queryset = Post.published.all()
-    paginate_by = 3
-    template_name = "blog/list.html"
+    if form.is_valid():
+        search_text = form.cleaned_data.get('q')
+        search_type = form.cleaned_data.get('type')
+
+        if search_text:
+            if search_type == 'title':
+                posts = posts.filter(title=search_text)
+
+            elif search_type == 'description':
+                posts = posts.filter(description=search_text)
+
+            elif search_type == 'author':
+                posts = posts.filter(
+                    author__username=search_text
+                )
+
+            if not posts.exists():
+                error = "پستی پیدا نشد."
+
+    paginator = Paginator(posts, 3)
+    page_number = request.GET.get('page', 1)
+
+    try:
+        posts = paginator.page(page_number)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+    context = {
+        'posts': posts,
+        'form': form,
+        'error': error,
+    }
+
+    return render(request, "blog/list.html", context)
+
+
+# class PostListView(ListView):
+#     context_object_name = "posts"
+#     queryset = Post.published.all()
+#     paginate_by = 3
+#     template_name = "blog/list.html"
 
 
 def post_detail(request, pk):
@@ -58,6 +83,7 @@ def post_detail(request, pk):
         'comments':comments,
     }
     return render(request, "blog/detail.html", context)
+
 
 # class PostDetailView(DetailView):
 #     model = Post
@@ -81,6 +107,7 @@ def post_detail(request, pk):
 #         else:
 #             form = TicketForm()
 #             return render(request, 'blog/ticket.html',{'form':form})
+
 
 def ticket(request):
     if request.method == "POST":
@@ -116,4 +143,3 @@ def post_comment(request, pk):
             'form': form
         }
     return  render(request,"forms/comment.html" ,context)
-

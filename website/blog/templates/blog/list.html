@@ -2,7 +2,17 @@
 {% block title %} post list {% endblock %}
 {% block content %}
     <h1> post list </h1>
-
+<form method="get">
+    {{ form.q }}
+    {{ form.type }}
+    <button type="submit">
+        Search
+    </button>
+</form>
+{% if error %}
+    <p>{{ error }}</p>
+{% endif %}
+<hr>
     {% for post in posts %}
         <h2>
             <a href="{{post.get_absolute_url}}">{{post.title}}</a>
