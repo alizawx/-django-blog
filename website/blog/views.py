@@ -1,4 +1,5 @@
 from email.policy import default
+from itertools import count
 from multiprocessing import context
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
@@ -10,12 +11,22 @@ from .forms import *
 import datetime
 from django.views.decorators.http import require_POST
 from .models import Post
+from django.db.models import Sum
+from .templatetags.blog_tags import total_post
+
+
 # Create your views here.
 
 
 
 def index(request):
-    return render(request, "blog/index.html")
+    total_views = Post.published.aggregate(
+        total=Sum('view_counts')
+    )
+    context = {
+        'total_views': total_views['total']
+    }
+    return render(request, "blog/index.html", context)
 
 
 def post_list(request):
