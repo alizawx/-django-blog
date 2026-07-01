@@ -11,7 +11,14 @@ urlpatterns = [
     path('posts/<pk>/', views.post_detail,name="post_detail"),
     path('ticket', views.ticket, name="ticket"),
     path('posts/<pk>/comment', views.post_comment,name="post_comment"),
+    path(
 
+        'category/<slug:slug>/',
 
+        views.category_posts,
+
+        name='category_posts'
+
+    )
 
 ]

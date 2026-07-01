@@ -9,6 +9,16 @@ class PublishedManager(models.Manager):
         return super().get_queryset().filter(status='PB')
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+    slug = models.SlugField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+
+
 class Post(models.Model):
 
     class Status(models.TextChoices):
@@ -27,6 +37,8 @@ class Post(models.Model):
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.DRAFT)
     reading_time = models.PositiveIntegerField(default=0 , verbose_name= "زمان مطالعه")
     view_counts = models.PositiveIntegerField(default=0, verbose_name="تعداد بازدید")
+
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name= "posts",null=True,blank=True,)
 
     objects = models.Manager()
     published = PublishedManager()
@@ -79,4 +91,5 @@ class Comment(models.Model):
 
     def get_absolute_url(self):
         return reverse('blog:post_detail', args=[self.id])
+
 

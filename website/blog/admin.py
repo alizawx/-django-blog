@@ -31,3 +31,8 @@ class CommentAdmin(admin.ModelAdmin):
     list_filter = ["name", 'post', 'created', 'active']
     list_editable = ["active"]
     search_fields = ["name", 'post', 'created','publish']
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['name', 'slug']
+    prepopulated_fields = {'slug': ['name']}

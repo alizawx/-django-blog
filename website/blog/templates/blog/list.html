@@ -2,6 +2,7 @@
 {% block title %} post list {% endblock %}
 {% block content %}
     <h1> post list </h1>
+
 <form method="get">
     {{ form.q }}
     {{ form.type }}
@@ -13,6 +14,13 @@
     <p>{{ error }}</p>
 {% endif %}
 <hr>
+{% for cat in categories %}
+    <a href={% url 'blog:category_posts' cat.slug %}>
+        {{ cat.name }} ({{ cat.post_count }})
+    </a>
+    <br>
+{% endfor %}
+<hr>
     {% for post in posts %}
         <h2>
             <a href="{{post.get_absolute_url}}">{{post.title}}</a>
@@ -21,5 +29,7 @@
                 <p> {{ post.get_absolute_url }} </p>
     {% endfor %}
 {% include "Partials/Paginations.html" with page=posts  %}
-                
+
+
+
 {% endblock %}

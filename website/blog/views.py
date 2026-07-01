@@ -11,7 +11,7 @@ from .forms import *
 import datetime
 from django.views.decorators.http import require_POST
 from .models import Post
-from django.db.models import Sum
+from django.db.models import Sum,Count
 from .templatetags.blog_tags import total_post
 
 
@@ -33,6 +33,8 @@ def post_list(request):
     posts = Post.published.all()
     form = SearchForm(request.GET or None)
     error = None
+
+    categories = Category.objects.annotate(post_count=Count('posts'))
 
     if form.is_valid():
         search_text = form.cleaned_data.get('q')
@@ -67,6 +69,7 @@ def post_list(request):
         'posts': posts,
         'form': form,
         'error': error,
+        'categories' :categories,
     }
 
     return render(request, "blog/list.html", context)
@@ -94,6 +97,24 @@ def post_detail(request, pk):
         'comments':comments,
     }
     return render(request, "blog/detail.html", context)
+
+def category_posts(request, slug):
+    category = get_object_or_404(
+        Category,
+        slug=slug
+    )
+    posts = Post.published.filter(
+        category__slug=slug
+    )
+    categories = Category.objects.annotate(
+        post_count=Count('posts')
+    )
+    context = {
+        'category': category,
+        'posts': posts,
+        'categories': categories,
+    }
+    return render(request, 'blog/list.html', context)
 
 
 # class PostDetailView(DetailView):
