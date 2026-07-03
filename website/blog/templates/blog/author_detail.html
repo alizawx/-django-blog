@@ -1,0 +1,1 @@
+<h1>{{ author.username }}</h1><p>Joined: {{ author.date_joined }}</p><p>Posts: {{ posts_count }}</p><hr><h3>Latest posts</h3>{% for post in posts %}    <p>        <a href="{{ post.get_absolute_url }}">            {{ post.title }}        </a>    </p>{% endfor %}

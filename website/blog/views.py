@@ -175,3 +175,13 @@ def post_comment(request, pk):
             'form': form
         }
     return  render(request,"forms/comment.html" ,context)
+
+def author_detail(request, username):
+    user = get_object_or_404(User, username=username)
+    posts = Post.objects.filter(author=user)
+    context = {
+        'author': user,
+        'posts': posts,
+        'posts_count': posts.count(),
+    }
+    return render(request, 'blog/author_detail.html', context)

@@ -12,13 +12,10 @@ urlpatterns = [
     path('ticket', views.ticket, name="ticket"),
     path('posts/<pk>/comment', views.post_comment,name="post_comment"),
     path(
-
         'category/<slug:slug>/',
-
         views.category_posts,
-
         name='category_posts'
-
-    )
+    ),
+    path('author/<str:username>', views.author_detail, name='author_detail'),
 
 ]
