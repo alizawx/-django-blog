@@ -1,0 +1,304 @@
+[
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$ufIMsa7T34Lfya4Ph2oidG$LHNBFY2kCNna35o4Zv5dK15hC/D6GVs8eRr9SVYTBF0=",
+        "last_login": "2026-07-03T16:53:25.630Z",
+        "is_superuser": true,
+        "username": "alireza",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2026-06-18T13:13:45.049Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "blog.category",
+    "pk": 1,
+    "fields": {
+        "name": "PYTHON",
+        "slug": "python"
+    }
+},
+{
+    "model": "blog.category",
+    "pk": 2,
+    "fields": {
+        "name": "C++",
+        "slug": "c"
+    }
+},
+{
+    "model": "blog.category",
+    "pk": 3,
+    "fields": {
+        "name": "JAVA",
+        "slug": "java"
+    }
+},
+{
+    "model": "blog.post",
+    "pk": 1,
+    "fields": {
+        "author": 1,
+        "title": "#c",
+        "description": "# Here's a Heading\r\nTry to put a blank line before...\r\n\r\n# Heading\r\n\r\n...and after a heading.\r\nI just love **bold text**.\r\nLove**is**bold",
+        "slug": "python",
+        "publish": "2026-06-18T13:15:03Z",
+        "created": "2026-06-18T13:15:25.992Z",
+        "updated": "2026-06-25T11:52:51.464Z",
+        "status": "PB",
+        "reading_time": 0,
+        "view_counts": 0,
+        "category": null
+    }
+},
+{
+    "model": "blog.post",
+    "pk": 2,
+    "fields": {
+        "author": 1,
+        "title": "c++",
+        "description": "the cpp is very difficult",
+        "slug": "c",
+        "publish": "2026-06-18T13:15:30Z",
+        "created": "2026-06-18T13:15:49.326Z",
+        "updated": "2026-06-30T09:02:26.508Z",
+        "status": "PB",
+        "reading_time": 10,
+        "view_counts": 1,
+        "category": null
+    }
+},
+{
+    "model": "blog.post",
+    "pk": 3,
+    "fields": {
+        "author": 1,
+        "title": "java",
+        "description": "gadfgkfga gfiolgwe igieghfg fiwughflehfsgb lsfhaelifh salfgsdilufgaself",
+        "slug": "java",
+        "publish": "2026-06-18T17:31:08Z",
+        "created": "2026-06-18T17:33:30.939Z",
+        "updated": "2026-06-18T17:33:30.939Z",
+        "status": "PB",
+        "reading_time": 0,
+        "view_counts": 0,
+        "category": null
+    }
+},
+{
+    "model": "blog.post",
+    "pk": 4,
+    "fields": {
+        "author": 1,
+        "title": "GO",
+        "description": "kluhlfas hflashflas fufhfhsadfbskfhisa;lndsv shvaslfhse;ih asfhaeihusalnvusv shvsav ahsdv;hu;eshaufilahusfyreahglsbl shforgrhlg drughyreg rghoraghr;g a;yghghavdvsdlivhg;vhavg;ergvjhergv",
+        "slug": "kiki",
+        "publish": "2026-06-18T17:33:30Z",
+        "created": "2026-06-18T17:33:46.476Z",
+        "updated": "2026-06-25T10:20:39.303Z",
+        "status": "DF",
+        "reading_time": 0,
+        "view_counts": 0,
+        "category": null
+    }
+},
+{
+    "model": "blog.post",
+    "pk": 6,
+    "fields": {
+        "author": 1,
+        "title": "django",
+        "description": "egergrsergsergergwesr",
+        "slug": "wegerwgr",
+        "publish": "2026-06-18T17:38:37Z",
+        "created": "2026-06-18T17:38:45.303Z",
+        "updated": "2026-06-25T10:21:03.774Z",
+        "status": "PB",
+        "reading_time": 0,
+        "view_counts": 0,
+        "category": null
+    }
+},
+{
+    "model": "blog.post",
+    "pk": 7,
+    "fields": {
+        "author": 1,
+        "title": "HTML",
+        "description": "egrfbgebertgerbgwertgerewrtbertbertbert",
+        "slug": "sefdgsdfgsrebg",
+        "publish": "2026-06-18T17:38:45Z",
+        "created": "2026-06-18T17:38:51.979Z",
+        "updated": "2026-07-01T10:19:01.598Z",
+        "status": "PB",
+        "reading_time": 0,
+        "view_counts": 5,
+        "category": null
+    }
+},
+{
+    "model": "blog.post",
+    "pk": 8,
+    "fields": {
+        "author": 1,
+        "title": "Ai",
+        "description": "berberqerghwergherbertbertwbsrgbs",
+        "slug": "ergreberwer",
+        "publish": "2026-06-18T17:38:52Z",
+        "created": "2026-06-18T17:38:58.197Z",
+        "updated": "2026-07-01T10:29:00.252Z",
+        "status": "PB",
+        "reading_time": 30,
+        "view_counts": 7,
+        "category": null
+    }
+},
+{
+    "model": "blog.post",
+    "pk": 9,
+    "fields": {
+        "author": 1,
+        "title": "python",
+        "description": "ebserbrtwbrtbherbhtrbwstbhtrswd",
+        "slug": "erbsrbsreberb",
+        "publish": "2026-06-18T17:38:58Z",
+        "created": "2026-06-18T17:39:06.625Z",
+        "updated": "2026-07-03T16:54:12.592Z",
+        "status": "PB",
+        "reading_time": 20,
+        "view_counts": 22,
+        "category": null
+    }
+},
+{
+    "model": "blog.post",
+    "pk": 10,
+    "fields": {
+        "author": 1,
+        "title": "java script",
+        "description": "hi I'm learning java...",
+        "slug": "java-script",
+        "publish": "2026-07-01T12:31:50Z",
+        "created": "2026-07-01T12:32:24.312Z",
+        "updated": "2026-07-01T12:32:24.312Z",
+        "status": "DF",
+        "reading_time": 0,
+        "view_counts": 0,
+        "category": 3
+    }
+},
+{
+    "model": "blog.ticket",
+    "pk": 20,
+    "fields": {
+        "message": "hi",
+        "name": "jcd",
+        "email": "sdc@gmail.com",
+        "phone": "09130669082",
+        "subject": "پیشنهاد"
+    }
+},
+{
+    "model": "blog.comment",
+    "pk": 1,
+    "fields": {
+        "post": 6,
+        "name": "rtgh",
+        "body": "sdrtgh",
+        "active": true,
+        "created": "13:15:16.192",
+        "publish": "13:15:16.192"
+    }
+},
+{
+    "model": "blog.comment",
+    "pk": 2,
+    "fields": {
+        "post": 6,
+        "name": "rtgh",
+        "body": "sdrtgh",
+        "active": true,
+        "created": "13:15:16.192",
+        "publish": "13:15:16.192"
+    }
+},
+{
+    "model": "blog.comment",
+    "pk": 3,
+    "fields": {
+        "post": 6,
+        "name": "Ziv",
+        "body": "g x",
+        "active": true,
+        "created": "13:15:16.191",
+        "publish": "13:15:16.191"
+    }
+},
+{
+    "model": "blog.comment",
+    "pk": 4,
+    "fields": {
+        "post": 6,
+        "name": "f",
+        "body": "dfdvfzx",
+        "active": true,
+        "created": "13:15:16.190",
+        "publish": "13:15:16.190"
+    }
+},
+{
+    "model": "blog.comment",
+    "pk": 5,
+    "fields": {
+        "post": 6,
+        "name": "b",
+        "body": "b",
+        "active": true,
+        "created": "13:15:16.190",
+        "publish": "13:15:16.190"
+    }
+},
+{
+    "model": "blog.comment",
+    "pk": 6,
+    "fields": {
+        "post": 6,
+        "name": "d",
+        "body": "d",
+        "active": true,
+        "created": "13:15:16.188",
+        "publish": "13:15:16.188"
+    }
+},
+{
+    "model": "blog.comment",
+    "pk": 7,
+    "fields": {
+        "post": 7,
+        "name": "juh",
+        "body": "gh",
+        "active": true,
+        "created": "13:15:16.185",
+        "publish": "13:15:16.185"
+    }
+},
+{
+    "model": "blog.comment",
+    "pk": 8,
+    "fields": {
+        "post": 2,
+        "name": "1st",
+        "body": "rags",
+        "active": true,
+        "created": "12:21:54.085",
+        "publish": "12:21:54.085"
+    }
+}
+]
