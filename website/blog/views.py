@@ -15,7 +15,7 @@ from django.views.decorators.http import require_POST
 from .models import Post
 from django.db.models import Sum,Count
 from .templatetags.blog_tags import total_post
-
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 
 # Create your views here.
 
@@ -194,8 +194,8 @@ def searching(request):
     if query:
         search_filter = SearchVector('title', 'description', 'slug')
         search_query = SearchQuery(query)
-        query_list = Post.objects.annotate(search=search_filter)
-        final_query = query_list.filter(search=search_query)
+        query_list = Post.objects.annotate(search=search_filter, rank=SearchRank(search_filter,search_query))
+        final_query = query_list.filter(search=search_query).order_by('-rank')
         context = {
             'final_query':final_query ,
         }
