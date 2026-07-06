@@ -195,4 +195,14 @@ def searching(request):
         search_filter = SearchVector('title', 'description', 'slug')
         search_query = SearchQuery(query)
         query_list = Post.objects.annotate(search=search_filter)
-        final_query = query_list.filter(search__search=search_query )
+        final_query = query_list.filter(search=search_query)
+        context = {
+            'final_query':final_query ,
+        }
+        return render(request,'blog/search.html',context)
+    else:
+        final_query = Post.published.all()
+        context = {
+            'final_query':final_query,
+        }
+        return render(request, 'blog/search.html',context)
