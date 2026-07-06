@@ -1,6 +1,8 @@
 from email.policy import default
 from itertools import count
 from multiprocessing import context
+
+from django.contrib.postgres.search import SearchVector, SearchQuery
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from django.http import HttpResponse, Http404
@@ -185,3 +187,12 @@ def author_detail(request, username):
         'posts_count': posts.count(),
     }
     return render(request, 'blog/author_detail.html', context)
+
+
+def searching(request):
+    query = request.GET.get('q')
+    if query:
+        search_filter = SearchVector('title', 'description', 'slug')
+        search_query = SearchQuery(query)
+        query_list = Post.objects.annotate(search=search_filter)
+        final_query = query_list.filter(search__search=search_query )
