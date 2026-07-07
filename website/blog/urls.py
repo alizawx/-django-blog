@@ -17,5 +17,7 @@ urlpatterns = [
         name='category_posts'
     ),
     path('author/<str:username>', views.author_detail, name='author_detail'),
+    path("search/", views.searching, name="search"),
+
 
 ]

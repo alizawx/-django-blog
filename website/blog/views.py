@@ -15,7 +15,7 @@ from django.views.decorators.http import require_POST
 from .models import Post
 from django.db.models import Sum,Count
 from .templatetags.blog_tags import total_post
-from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank, TrigramSimilarity
 
 # Create your views here.
 
@@ -33,29 +33,8 @@ def index(request):
 
 def post_list(request):
     posts = Post.published.all()
-    form = SearchForm(request.GET or None)
-    error = None
-
+    form = SearchForm()
     categories = Category.objects.annotate(post_count=Count('posts'))
-
-    if form.is_valid():
-        search_text = form.cleaned_data.get('q')
-        search_type = form.cleaned_data.get('type')
-
-        if search_text:
-            if search_type == 'title':
-                posts = posts.filter(title=search_text)
-
-            elif search_type == 'description':
-                posts = posts.filter(description=search_text)
-
-            elif search_type == 'author':
-                posts = posts.filter(
-                    author__username=search_text
-                )
-
-            if not posts.exists():
-                error = "پستی پیدا نشد."
 
     paginator = Paginator(posts, 3)
     page_number = request.GET.get('page', 1)
@@ -70,7 +49,6 @@ def post_list(request):
     context = {
         'posts': posts,
         'form': form,
-        'error': error,
         'categories' :categories,
     }
 
@@ -191,18 +169,39 @@ def author_detail(request, username):
 
 def searching(request):
     query = request.GET.get('q')
+
     if query:
-        search_filter = SearchVector('title', 'description', 'slug')
+        search_vector = (
+                SearchVector('title', weight='A') +
+                SearchVector('description', weight='B') +
+                SearchVector('slug', weight='C')
+        )
         search_query = SearchQuery(query)
-        query_list = Post.objects.annotate(search=search_filter, rank=SearchRank(search_filter,search_query))
-        final_query = query_list.filter(search=search_query).order_by('-rank')
+        query_list = (
+            Post.objects
+            .annotate(
+                search=search_vector,
+                similarity=TrigramSimilarity('title', query),
+                rank=SearchRank(search_vector, search_query),
+            )
+            .filter(similarity__gt=0.01)
+            .order_by('-similarity')
+        )
+
+        # final_query = query_list.filter(search=search_query).order_by('-rank')
+        final_query = query_list
+
         context = {
             'final_query':final_query ,
         }
+        print(query_list.count())
         return render(request,'blog/search.html',context)
+
     else:
         final_query = Post.published.all()
+
         context = {
             'final_query':final_query,
         }
+
         return render(request, 'blog/search.html',context)

@@ -1,1 +1,1 @@
-<form method="GET">    <input type="text" name="q" placeholder="Search...">    <button type="submit">Search</button></form><hr>{% for post in final_query %}    <h2>{{ post.title }}</h2>    <p>{{ post.description }}</p>{% empty %}    <p>No results found</p>{% endfor %}
+{% for post in final_query %}    <h2>{{ post.title }}</h2>    <p>{{ post.description }}</p>{% empty %}    <p>No results found.</p>{% endfor %}

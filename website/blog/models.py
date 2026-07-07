@@ -17,8 +17,6 @@ class Category(models.Model):
         return self.name
 
 
-
-
 class Post(models.Model):
 
     class Status(models.TextChoices):
