@@ -18,6 +18,7 @@ urlpatterns = [
     ),
     path('author/<str:username>', views.author_detail, name='author_detail'),
     path("search/", views.searching, name="search"),
+    path('profile/',views.profile,name='profile')
 
 
 ]
