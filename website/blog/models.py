@@ -1,3 +1,5 @@
+from tkinter.constants import CASCADE
+
 import jalali_date
 from django.db import models
 from django.utils import timezone
@@ -91,3 +93,6 @@ class Comment(models.Model):
         return reverse('blog:post_detail', args=[self.id])
 
 
+class Image(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE,related_name='image',verbose_name='تصویر')
+    
