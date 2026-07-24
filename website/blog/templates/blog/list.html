@@ -21,6 +21,7 @@
             <h2>
                 <p>{{ post.description | truncatewords:4 }}</p>
                 <p> {{ post.get_absolute_url }} </p>
+                <img src="{{ post.images.first.image_file.url }}" alt="{{ post.images.first.title }}">
     {% endfor %}
 {% include "Partials/Paginations.html" with page=posts  %}
 
