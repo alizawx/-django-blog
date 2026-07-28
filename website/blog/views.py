@@ -222,12 +222,20 @@ def profile(request):
 def create_post(request):
     if request.method == 'POST':
         form = CreatePostForm(request.POST, request.FILES)
+
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            post.images.add(form.cleaned_data['image'])
             post.save()
-            return redirect(' blog:index')
-    else :
+
+            if form.cleaned_data.get('image'):
+                Image.objects.create(
+                    image_file=form.cleaned_data['image'],
+                    post=post
+                )
+
+            return redirect('blog:index')
+    else:
         form = CreatePostForm()
-    return render(request, 'forms/create_post.html', {'form':form})
+
+    return render(request, 'forms/create_post.html', {'form': form})

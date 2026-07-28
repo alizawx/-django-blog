@@ -19,7 +19,7 @@ urlpatterns = [
     path('author/<str:username>', views.author_detail, name='author_detail'),
     path("search/", views.searching, name="search"),
     path('profile/',views.profile,name='profile'),
-    path('profile/create_post',views.profile,name='create_post'),
+    path('profile/create_post',views.create_post,name='create_post'),
 
 
 ]
