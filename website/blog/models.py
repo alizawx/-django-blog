@@ -5,6 +5,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.template.defaultfilters import slugify
 
 class PublishedManager(models.Manager):
     def get_queryset(self):
@@ -37,7 +38,6 @@ class Post(models.Model):
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.DRAFT)
     reading_time = models.PositiveIntegerField(default=0 , verbose_name= "زمان مطالعه")
     view_counts = models.PositiveIntegerField(default=0, verbose_name="تعداد بازدید")
-
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name= "posts",null=True,blank=True,)
 
     objects = models.Manager()
@@ -52,6 +52,9 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('blog:post_detail', args=[self.id])
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
 
 class Ticket(models.Model):
     message = models.TextField(verbose_name=" بيام")

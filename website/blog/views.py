@@ -16,6 +16,7 @@ from .models import Post
 from django.db.models import Sum,Count
 from .templatetags.blog_tags import total_post
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank, TrigramSimilarity
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -207,8 +208,26 @@ def searching(request):
         return render(request, 'blog/search.html',context)
 
 
+# def profile(request):
+#     user = request.user
+#     posts= Post.published.filter(author=user)
+#
+#     return render(request,"blog/profile.html" ,{"posts":posts})
+@login_required(login_url='/admin/login/')
 def profile(request):
-    user = request.user
-    posts= Post.published.filter(author=user)
+    posts = Post.objects.filter(author=request.user)
+    return render(request, 'blog/profile.html', {'posts': posts})
 
-    return render(request,"blog/profile.html" ,{"posts":posts})
+
+def create_post(request):
+    if request.method == 'POST':
+        form = CreatePostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.images.add(form.cleaned_data['image'])
+            post.save()
+            return redirect(' blog:index')
+    else :
+        form = CreatePostForm()
+    return render(request, 'forms/create_post.html', {'form':form})
