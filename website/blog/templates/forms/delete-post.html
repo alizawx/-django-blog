@@ -1,0 +1,1 @@
+{% extends 'parents/base.html' %}{% block title %} post delete {% endblock %}{% block content %}    <h2> are you sure? for delete post ({{post.title}}) ...</h2>    <form method="post" >        <button type="submit">delete</button>        <br>        <a href="{% url 'blog:profile' %}"> BACK </a>        <br>        {% csrf_token %}    </form>{% endblock %}
