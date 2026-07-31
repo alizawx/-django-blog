@@ -1,3 +1,4 @@
+from email.mime import image
 from tkinter.constants import CASCADE
 
 import jalali_date
@@ -53,8 +54,15 @@ class Post(models.Model):
         return reverse('blog:post_detail', args=[self.id])
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
+        if not self.slug:
+            self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        for img in self.images.all():
+            storage, path = img.image_file.storage, img.image_file.path
+            storage.delete(path)
+        super().delete(*args, **kwargs)
 
 class Ticket(models.Model):
     message = models.TextField(verbose_name=" بيام")
