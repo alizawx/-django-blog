@@ -13,7 +13,7 @@ from .forms import *
 import datetime
 from django.views.decorators.http import require_POST
 from .models import Post
-from django.db.models import Sum,Count
+from django.db.models import Sum, Count, Model
 from .templatetags.blog_tags import total_post
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank, TrigramSimilarity
 from django.contrib.auth.decorators import login_required
@@ -260,3 +260,8 @@ def edite_post(request, post_id):
     else:
         form = CreatePostForm(instance=post)
     return render (request, 'forms/create_post.htmL', {'form': form})
+
+def delete_image(request, image_id):
+    image = get_object_or_404(Image, id=image_id)
+    image.delete()
+    return redirect('blog:profile')
