@@ -19,5 +19,6 @@ urlpatterns = [
     path('profile/delete_post/<post_id>',views.delete_post,name='delete_post'),
     path('profile/edite_post/<post_id>',views.edite_post,name='edite_post'),
     path('profile/delete_image/<image_id>',views.delete_image,name='delete_image'),
+    path('login',views.user_login,name='login'),
 
 ]
