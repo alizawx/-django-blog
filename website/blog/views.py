@@ -16,8 +16,8 @@ from .models import Post
 from django.db.models import Sum, Count, Model
 from .templatetags.blog_tags import total_post
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank, TrigramSimilarity
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
 
 # Create your views here.
 
@@ -122,7 +122,7 @@ def category_posts(request, slug):
 #             form = TicketForm()
 #             return render(request, 'blog/ticket.html',{'form':form})
 
-
+@login_required
 def ticket(request):
     if request.method == "POST":
         form = TicketForm(request.POST)
@@ -219,7 +219,7 @@ def profile(request):
     posts = Post.objects.filter(author=request.user)
     return render(request, 'blog/profile.html', {'posts': posts})
 
-
+@login_required
 def create_post(request):
     if request.method == 'POST':
         form = CreatePostForm(request.POST, request.FILES)
@@ -241,6 +241,7 @@ def create_post(request):
 
     return render(request, 'forms/create_post.html', {'form': form})
 
+@login_required
 def delete_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     if request.method == 'POST':
@@ -248,6 +249,7 @@ def delete_post(request, post_id):
         return redirect('blog:profile')
     return render(request, 'forms/delete-post.html', {'post':post})
 
+@login_required
 def edite_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     if request.method == 'POST':
@@ -262,25 +264,30 @@ def edite_post(request, post_id):
         form = CreatePostForm(instance=post)
     return render (request, 'forms/create_post.htmL', {'form': form})
 
+@login_required
 def delete_image(request, image_id):
     image = get_object_or_404(Image, id=image_id)
     image.delete()
     return redirect('blog:profile')
 
-def user_login(request):
-    if request.method == 'POST':
-        form = LoginFrom(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            user = authenticate(request, username=cd['username'], password=cd['password'])
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return redirect('blog:index')
-                else:
-                    return HttpResponse("YOUR ACCOUNT IS DISABLE")
-            else:
-                return HttpResponse("YOU ARE NOT LOGIN!")
-    else:
-        form = LoginFrom()
-    return render (request, 'forms/login.html', {'form' : form})
+# def user_login(request):
+#     if request.method == 'POST':
+#         form = LoginFrom(request.POST)
+#         if form.is_valid():
+#             cd = form.cleaned_data
+#             user = authenticate(request, username=cd['username'], password=cd['password'])
+#             if user is not None:
+#                 if user.is_active:
+#                     login(request, user)
+#                     return redirect('blog:index')
+#                 else:
+#                     return HttpResponse("YOUR ACCOUNT IS DISABLE")
+#             else:
+#                 return HttpResponse("YOU ARE NOT LOGIN!")
+#     else:
+#         form = LoginFrom()
+#     return render (request, 'forms/login.html', {'form' : form})
+
+def log_out(request):
+    logout(request)
+    return redirect(request.META.get("HTTP_REFERER"))

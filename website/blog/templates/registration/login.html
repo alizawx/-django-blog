@@ -1,0 +1,1 @@
+{% extends 'parents/base.html' %}{% block title %} login  {% endblock %}{% block content %}<h1> login </h1><p> Please inter you're information:</p>  <form method="post">    {% csrf_token %}    {{ form.as_p }}      <input type ='hidden' name="next" value="{{ next }}">    <input type="submit" value="login">  </form>{% endblock %}
