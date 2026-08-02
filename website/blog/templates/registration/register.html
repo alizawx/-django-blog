@@ -1,0 +1,1 @@
+{% extends 'parents/base.html' %}{% block title %} change password {% endblock %}{% block content %}<h1> register </h1><p> Please inter new password:</p>  <form method="post">    {% csrf_token %}    {{ form.as_p }}    <input type="submit" value="صبت تام">  </form>{% endblock %}
